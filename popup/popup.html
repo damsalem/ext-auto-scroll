@@ -8,31 +8,37 @@
     <body>
         <div class="container">
             <h1>Smooth Scroll Extension</h1>
-            <div class="param">
-                <label for="delay" class="param-lab">
-                    <input
-                        type="number"
-                        name="Scroll Delay"
-                        id="delay"
-                        class="param-inp"
-                        min="0"
-                        placeholder="2"
-                    />
-                    Delay in Seconds
-                </label>
-                <label for="duration" class="param-lab">
-                    <input
-                        type="number"
-                        name="Scroll Duration"
-                        id="duration"
-                        class="param-inp"
-                        min="1"
-                        placeholder="4"
-                    />
-                    Duration in Seconds
-                </label>
-            </div>
-            <a href="#" id="scrollButton">Scroll</a>
+            <form id="formParams" class="form">
+                <div class="form-flex">
+                    <label for="delay" class="form-label">
+                        <input
+                            type="number"
+                            name="delay"
+                            id="delay"
+                            class="form-input"
+                            min="0"
+                            value="0"
+                        />
+                        Delay in Seconds
+                    </label>
+                    <label for="duration" class="form-label">
+                        <input
+                            type="range"
+                            name="duration"
+                            id="duration"
+                            class="form-input"
+                            min="1"
+                            max="10"
+                            value="1"
+                        />
+                        Speed from 1-10
+                        <output name="Duration Value" id="duration-value"
+                            >1</output
+                        >
+                    </label>
+                </div>
+                <button id="scrollButton">Scroll</button>
+            </form>
         </div>
 
         <script src="popup.js"></script>

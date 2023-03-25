@@ -1,41 +1,22 @@
-function smoothScroll(duration) {
-    const start = window.pageYOffset;
-    const end = document.body.scrollHeight - window.innerHeight;
-    const distance = end - start;
-    let startTime = null;
-
-    function scrollAnimation(currentTime) {
-        if (startTime === null) startTime = currentTime;
-        const timeElapsed = currentTime - startTime;
-        const scrollAmount = easeInOutQuad(
-            timeElapsed,
-            start,
-            distance,
-            duration
-        );
-        window.scrollTo(0, scrollAmount);
-        if (timeElapsed < duration) requestAnimationFrame(scrollAnimation);
-    }
-
-    function easeInOutQuad(t, b, c, d) {
-        t /= d / 2;
-        if (t < 1) return (c / 2) * t * t + b;
-        t--;
-        return (-c / 2) * (t * (t - 2) - 1) + b;
-    }
-
-    requestAnimationFrame(scrollAnimation);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const scrollButton = document.getElementById("scrollButton");
-    scrollButton.addEventListener("click", () => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                func: smoothScroll,
-                args: [2000], // Scroll for 2 seconds
-            });
+document.addEventListener("DOMContentLoaded", function () {
+    var formParams = document.querySelector("#formParams");
+    formParams.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var formData = new FormData(event.target);
+        var delay = formData.get("delay");
+        var duration = formData.get("duration");
+        console.log(`delay ${delay}, duration ${duration}`);
+        chrome.runtime.sendMessage({
+            action: "scroll",
+            delay: delay,
+            duration: duration,
         });
+    });
+
+    const durationInput = document.getElementById("duration");
+    const durationValue = document.getElementById("duration-value");
+
+    durationInput.addEventListener("input", function () {
+        durationValue.textContent = durationInput.value;
     });
 });

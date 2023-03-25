@@ -3,9 +3,38 @@
     <head>
         <meta charset="utf-8" />
         <title>Smooth Scroll Extension</title>
-        <script src="popup.js"></script>
+        <link rel="stylesheet" href="popup.css" />
     </head>
     <body>
-        <button id="scrollButton">Scroll</button>
+        <div class="container">
+            <h1>Smooth Scroll Extension</h1>
+            <div class="param">
+                <label for="delay" class="param-lab">
+                    <input
+                        type="number"
+                        name="Scroll Delay"
+                        id="delay"
+                        class="param-inp"
+                        min="0"
+                        placeholder="2"
+                    />
+                    Delay in Seconds
+                </label>
+                <label for="duration" class="param-lab">
+                    <input
+                        type="number"
+                        name="Scroll Duration"
+                        id="duration"
+                        class="param-inp"
+                        min="1"
+                        placeholder="4"
+                    />
+                    Duration in Seconds
+                </label>
+            </div>
+            <a href="#" id="scrollButton">Scroll</a>
+        </div>
+
+        <script src="popup.js"></script>
     </body>
 </html>

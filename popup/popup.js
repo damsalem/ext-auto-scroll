@@ -6,17 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
         var formData = new FormData(event.target);
         var delay = formData.get("delay");
         var duration = formData.get("duration");
-        chrome.runtime.sendMessage(
-            {
-                action: "scroll",
-                delay: delay,
-                duration: duration,
-            },
-            function (response) {
-                // Hide or minimize the popup.html here
-                window.close(); // This will close the popup
-            }
-        );
+        chrome.runtime.sendMessage({
+            action: "scroll",
+            delay: delay,
+            duration: duration,
+        });
+        // Close window after a delay
+        setTimeout(function () {
+            window.close();
+        }, 500);
     });
 
     toTop.addEventListener("click", function (event) {
@@ -26,8 +24,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const durationInput = document.getElementById("duration");
-    const durationValue = document.getElementById("duration-value");
+    chrome.runtime.lastError && console.error(chrome.runtime.lastError);
+
+    var durationInput = document.querySelector("#duration");
+    var durationValue = document.querySelector("#duration-value");
 
     durationInput.addEventListener("input", function () {
         durationValue.textContent = durationInput.value;

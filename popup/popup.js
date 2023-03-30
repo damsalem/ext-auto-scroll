@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         var formData = new FormData(event.target);
         var delay = formData.get("delay");
-        var duration = formData.get("duration");
+        var speed = formData.get("speed");
         chrome.runtime.sendMessage({
             action: "scroll",
             delay: delay,
-            duration: duration,
+            speed: speed,
         });
         // Close window after a delay
         setTimeout(function () {
@@ -39,12 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chrome.runtime.lastError && console.error(chrome.runtime.lastError);
 
-    var durationInput = document.querySelector("#duration");
-    var durationValue = document.querySelector("#duration-value");
+    var speedInput = document.querySelector("#speed");
+    var speedValue = document.querySelector("#speed-value");
 
-    durationInput.addEventListener("input", function () {
-        const currentSpeed = speeds[durationInput.value - 1];
+    speedInput.addEventListener("input", function () {
+        const currentSpeed = speeds[speedInput.value - 1];
         console.log(currentSpeed);
-        durationValue.textContent = currentSpeed;
+        speedValue.textContent = currentSpeed;
     });
 });

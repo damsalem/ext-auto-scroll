@@ -5,3 +5,4 @@ A simple Chrome extension to scroll the full length of the page for a specified 
 # ToDo
 
 -   Add a stop function
+-   Add icons and images

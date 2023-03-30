@@ -1,3 +1,16 @@
+const speeds = [
+    "Steady",
+    "Moderate",
+    "Quick",
+    "Nimble",
+    "Fast",
+    "Rapid",
+    "Swift",
+    "Blazing",
+    "Lightning",
+    "Turbo",
+];
+
 document.addEventListener("DOMContentLoaded", function () {
     var formParams = document.querySelector("#formParams");
     var toTop = document.querySelector("#toTop");
@@ -30,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var durationValue = document.querySelector("#duration-value");
 
     durationInput.addEventListener("input", function () {
-        durationValue.textContent = durationInput.value;
+        const currentSpeed = speeds[durationInput.value - 1];
+        console.log(currentSpeed);
+        durationValue.textContent = currentSpeed;
     });
 });

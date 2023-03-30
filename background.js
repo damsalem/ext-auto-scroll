@@ -1,16 +1,21 @@
 function scrollDown(speed, delay) {
     delay = delay || 0.75;
     delay = Math.max(delay, 0.75);
-    var distance = document.documentElement.scrollHeight - window.innerHeight;
-    var incrementFactor = 100;
-    var scrollIncrement = distance / ((11 - speed) * incrementFactor);
+
+    // Calculate the remaining distance to be scrolled
+    var remainingDistance =
+        document.documentElement.scrollHeight -
+        window.innerHeight -
+        window.scrollY;
+    var incrementFactor = 10;
+    var scrollIncrement = remainingDistance / ((11 - speed) * incrementFactor);
 
     setTimeout(function () {
         var scrolledDistance = 0;
         var scrollInterval = setInterval(function () {
             scrolledDistance += scrollIncrement;
             window.scrollBy(0, scrollIncrement);
-            if (scrolledDistance >= distance) {
+            if (scrolledDistance >= remainingDistance) {
                 clearInterval(scrollInterval);
             }
         }, 100);

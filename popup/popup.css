@@ -1,3 +1,8 @@
+:root {
+    --green: #009c1b;
+    --gray: rgb(95, 99, 104);
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -25,10 +30,10 @@
 .bold {
     font-weight: bold;
 }
-#scrollButton,
-.button {
-    background-color: gray;
-    border: 1px solid rgb(95, 99, 104);
+button#scrollButton,
+a.button {
+    background-color: var(--green);
+    border: 1px solid var(--green);
     border-radius: 4px;
     color: white;
     cursor: pointer;
@@ -42,9 +47,11 @@
     transition: opacity 300ms;
 }
 #scrollButton:hover,
-.button:hover {
+a.button:hover {
     opacity: 80%;
 }
-.button {
+a.button {
+    background-color: var(--gray);
+    border: 1px solid var(--gray);
     margin: 1rem auto;
 }

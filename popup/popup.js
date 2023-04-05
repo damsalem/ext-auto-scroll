@@ -1,4 +1,4 @@
-const speeds = [
+var speeds = [
     "Steady",
     "Moderate",
     "Quick",
@@ -11,40 +11,55 @@ const speeds = [
     "Turbo",
 ];
 
-document.addEventListener("DOMContentLoaded", function () {
-    var formParams = document.querySelector("#formParams");
-    var toTop = document.querySelector("#toTop");
-    formParams.addEventListener("submit", function (event) {
-        event.preventDefault();
-        var formData = new FormData(event.target);
-        var delay = formData.get("delay");
-        var speed = formData.get("speed");
-        chrome.runtime.sendMessage({
-            action: "scroll",
-            delay: delay,
-            speed: speed,
-        });
-        // Close window after a delay
-        setTimeout(function () {
-            window.close();
-        }, 500);
+// Buttons and inputs
+var toTop = document.querySelector("#toTop");
+var formParams = document.querySelector("#formParams");
+var delayInput = document.querySelector("#delay");
+var speedInput = document.querySelector("#speed");
+var speedValue = document.querySelector("#speed-value");
+
+document.addEventListener("DOMContentLoaded", async function () {
+    var keys = await chrome.storage.sync.get(["delay", "speed"]);
+    delayInput.value = keys.delay ? keys.delay : 0;
+    speedInput.value = keys.speed ? keys.speed : 1;
+
+    handleSpeedText();
+});
+
+formParams.addEventListener("change", function (event) {
+    var delayValue = delayInput.value;
+    var speedValue = speedInput.value;
+
+    // Set to values to state
+    chrome.storage.sync.set({ delay: delayValue, speed: speedValue });
+});
+
+formParams.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Send message to background
+    chrome.runtime.sendMessage({
+        action: "scroll",
+        delay: delayValue,
+        speed: speedValue,
     });
 
-    toTop.addEventListener("click", function (event) {
-        event.preventDefault();
-        chrome.runtime.sendMessage({
-            action: "toTop",
-        });
-    });
+    // Close window after a delay
+    setTimeout(function () {
+        window.close();
+    }, 500);
+});
 
-    chrome.runtime.lastError && console.error(chrome.runtime.lastError);
-
-    var speedInput = document.querySelector("#speed");
-    var speedValue = document.querySelector("#speed-value");
-
-    speedInput.addEventListener("input", function () {
-        const currentSpeed = speeds[speedInput.value - 1];
-        console.log(currentSpeed);
-        speedValue.textContent = currentSpeed;
+toTop.addEventListener("click", function (event) {
+    event.preventDefault();
+    chrome.runtime.sendMessage({
+        action: "toTop",
     });
 });
+
+speedInput.addEventListener("input", handleSpeedText);
+
+function handleSpeedText() {
+    var currentSpeed = speeds[speedInput.value - 1];
+    speedValue.textContent = currentSpeed;
+}
